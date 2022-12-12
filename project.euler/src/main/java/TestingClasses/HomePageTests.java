@@ -19,4 +19,18 @@ public class HomePageTests extends ProjectEulerTestBase {
 		
 		Assert.assertEquals(currentUrl, expectedUrl, "Wrong URL.");
 	}
+	
+	@Test
+	public void canLookupSpecificProblemByNumber() {
+		String expectedUrl = "https://projecteuler.net/archives";
+		
+		String currentUrl = 
+				new HomePageObject(this.getDriver(), this.getBaseUrl())
+				.navigate()
+				.goToArchivePage()
+				.getCurrentUrl();
+		//TODO: Make an ArchivePageObject and implement looking up problem by number
+		
+		Assert.assertEquals(currentUrl, expectedUrl, "Wrong URL.");
+	}
 }
