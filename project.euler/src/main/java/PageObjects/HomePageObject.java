@@ -15,14 +15,14 @@ public class HomePageObject extends PageObjectBase {
 	}
 
 	public HomePageObject navigate() {
-		getDriver().navigate().to(getBaseUrl());	
+		getDriver().navigate().to(getBaseUrl());
 
 		return this;
 	}
 	
-	public HomePageObject goToArchivePage() {
+	public ArchivePageObject goToArchivePage() {
 		this.archiveButton.click();
 		
-		return this;
+		return new ArchivePageObject(getDriver(), getBaseUrl());
 	}
 }
