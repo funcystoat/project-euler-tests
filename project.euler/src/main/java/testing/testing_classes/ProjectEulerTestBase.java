@@ -1,4 +1,4 @@
-package Testing.TestingClasses;
+package testing.testing_classes;
 
 public class ProjectEulerTestBase extends SeleniumTestBase {
 	public ProjectEulerTestBase() {

@@ -1,9 +1,9 @@
-package Testing.TestingClasses;
+package testing.testing_classes;
 
 import org.testng.annotations.Test;
 
-import PageObjects.ArchivePageObject;
-import PageObjects.HomePageObject;
+import page.objects.ArchivePageObject;
+import page.objects.HomePageObject;
 
 import org.testng.Assert;
 

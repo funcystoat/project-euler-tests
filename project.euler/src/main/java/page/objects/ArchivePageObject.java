@@ -1,4 +1,4 @@
-package PageObjects;
+package page.objects;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

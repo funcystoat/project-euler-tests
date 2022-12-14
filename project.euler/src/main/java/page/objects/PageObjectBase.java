@@ -1,11 +1,11 @@
-package PageObjects;
+package page.objects;
 
 import java.util.Set;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import Testing.TestingClasses.Helpers;
+import testing.testing_classes.Helpers;
 
 public abstract class PageObjectBase {
 	private WebDriver driver;
