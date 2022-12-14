@@ -5,7 +5,7 @@ import java.util.Set;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import TestingClasses.Helpers;
+import Testing.TestingClasses.Helpers;
 
 public abstract class PageObjectBase {
 	private WebDriver driver;

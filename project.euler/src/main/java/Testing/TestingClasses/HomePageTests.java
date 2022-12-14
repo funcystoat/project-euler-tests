@@ -1,4 +1,4 @@
-package TestingClasses;
+package Testing.TestingClasses;
 
 import org.testng.annotations.Test;
 
@@ -47,7 +47,8 @@ public class HomePageTests extends ProjectEulerTestBase {
 
 		Integer reps = Integer.parseInt(archivePage.getNumberOfProblems());
 		
-		for (int i = 1; i < reps; i++) {
+		//TODO set i to 1 (set as is temporarily to speed up development)
+		for (int i = reps - 3; i < reps; i++) {
 			String problemNumber = "" + i;
 			String expectedUrl = "https://projecteuler.net/problem=" + problemNumber;
 

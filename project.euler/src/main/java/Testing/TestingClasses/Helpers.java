@@ -1,4 +1,4 @@
-package TestingClasses;
+package Testing.TestingClasses;
 
 import java.util.Iterator;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package TestingClasses;
+package Testing.TestingClasses;
 
 import java.time.Duration;
 import org.openqa.selenium.WebDriver;
