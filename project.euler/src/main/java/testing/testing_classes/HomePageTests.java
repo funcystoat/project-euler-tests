@@ -2,8 +2,8 @@ package testing.testing_classes;
 
 import org.testng.annotations.Test;
 
-import page.objects.ArchivePageObject;
-import page.objects.HomePageObject;
+import page.page_objects.ArchivePageObject;
+import page.page_objects.HomePageObject;
 
 import org.testng.Assert;
 
