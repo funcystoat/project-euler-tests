@@ -27,8 +27,13 @@ public class Problem1 {
 	}
 
 	// Directly goes through only the multiples of 3 and then the multiples of 5
-	// In the case of 1000 this only runs (1000/3 + 1000/5) = 333 + 200 = 533 times
-	// instead of 1000
+	// In the case of 1000 this means we go through 
+	// (1000/3 + 1000/5) = 333 + 200 = 533 integers
+	// instead of 1000.
+	// However, as we still have to iterate through the resulting 
+	// Set (which was used as it doesn't allow duplicate elements, 
+	// thereby taking care of the double counting issue on its own)
+	// this adds another 533 operations. Not actually better...
 	public static void differentBruteForce(int upperBound) {
 		Integer sum = 0;
 
