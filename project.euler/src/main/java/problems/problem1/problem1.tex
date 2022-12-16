@@ -1,0 +1,349 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\usepackage{pgfplots}
+\usepackage{tabto}
+\usepackage{blindtext}
+\usepackage{scrextend}
+\usepackage{yfonts}
+\usepackage{eufrak}
+\usepackage{tikz-cd}
+\usepackage{mathrsfs}
+\newcommand{\invamalg}{\mathbin{\text{\rotatebox[origin=c]{180}{$\amalg$}}}}
+
+\usepackage{natbib}
+\expandafter\def\expandafter\quote\expandafter{\quote\small}
+
+
+\newcommand{\tss}{\textsuperscript}
+\newcommand{\GLC}{\textbf{GL}(n;\mathbb{C})}
+\newcommand{\GLR}{\textbf{GL}(n;\mathbb{R})}
+\newcommand{\SLC}{\textbf{SL}(n;\mathbb{C})}
+\newcommand{\SLR}{\textbf{SL}(n;\mathbb{R})}
+\newcommand{\MC}{M_n(\mathbb{C})}
+\newcommand{\MR}{M_n(\mathbb{R})}
+\newcommand{\ex}{e^X}
+\newcommand{\norm}{||}
+\newcommand{\peps}{P_{\epsilon_k}}
+\newcommand{\lieg}{\mathfrak{g}}
+\newcommand{\lieh}{\mathfrak{h}}
+
+\newcommand{\glC}{\textbf{gl}(n;\mathbb{C})}
+\newcommand{\glR}{\textbf{gl}(n;\mathbb{R})}
+\newcommand{\slC}{\textbf{sl}(n;\mathbb{C})}
+\newcommand{\slR}{\textbf{sl}(n;\mathbb{R})}
+
+\newcommand{\Hom}{\mathrm{Hom}}
+
+
+\pgfplotsset{compat=1.16}
+
+\author{Alexander Leigh Eubanks }
+\title{Operation: Foundational Repair\\ aka\\ Be More Careful with The Hammer}
+
+\begin{document}
+\maketitle
+\paragraph{Exercise I.3.10 (\#1):}  
+\begin{itemize}
+	\item\textit{(a)} Show that the category $\mathfrak{Set}$ contains a subobject classifier. 
+	\begin{proof}
+		First of all, the obvious notion of "subobject" in $\mathfrak{Set}$ is "subset". So, what we need to do is exhibit a special set $\Omega \in \mathrm{Ob }\mathfrak{Set}$ and then exhibit morphisms in $\Hom_{\mathfrak{Set}}(A,\Omega)$ which are uniquely determined by subsets $X \subset A$ such that the following diagram commutes ($1$ is the final object in the category):\\\\
+		\begin{tikzcd}
+			X \arrow[r] \arrow[d, hook]& 1\arrow[d]\\
+			A \arrow[r] & \Omega
+		\end{tikzcd}\\\\
+		and such that $X$ is universal with respect to this diagram.\\\\
+		Well, let $\Omega = \{y,n\}$, let $\chi_X : A \rightarrow \Omega$ be defined by
+		\[
+			\chi_X(a) = 	\begin{cases}
+							y & \text{ if } a \in X\\
+							n & \text{ if } a \not\in X
+						\end{cases},
+		\]
+		let $Y : 1 \rightarrow \Omega$ be the map $* \mapsto y$, and let $ *_X : X \rightarrow 1 = \{*\}$ be the unique map from $X$ to $\{*\}$. Then, the diagram\\\\
+		\begin{tikzcd}
+			X \arrow[r, "*_X"] \arrow[d, "i_X",hook]& 1 = \{*\}\arrow[d, "Y"]\\
+			A \arrow[r, "\chi_{X}"] & \Omega =\{y,n\}
+		\end{tikzcd}\\\\
+		
+		Manifestly commutes, as $\forall x\in X$ we have that $(Y\circ *_X)(x) = y = \chi_X \circ i_X(x)$ where $i_X:X \rightarrow A$ is the inclusion map.\\\\
+		
+		Further, this makes $X$ universal as if $W$ is such that\\
+		\begin{tikzcd}
+			X \arrow[rr, "*_X"] \arrow[dd, "i_X", hook]	&						& 1 = \{*\}\arrow[dd, "Y"]\\
+											&	W \arrow[ld, "i_W", hook] \arrow[ru, "*_W"]	&\\
+			A \arrow[rr, "\chi_{X}"] 				&						& \Omega =\{y,n\}
+		\end{tikzcd}\\\\
+		commutes, then $\forall w\in W$ we have that $\chi_X(i_W(w)) = y = Y(*_W(w))$. But this can only be the case if $W\subset X$. Then, there is an inclusion $i_{WX} : W \rightarrow X$ such that\\
+		\begin{tikzcd}
+			X \arrow[rr, "*_X"] \arrow[dd, "i_X", hook]	&						& 1 = \{*\}\arrow[dd, "Y"]\\
+											&	W \arrow[ld, "i_W", hook] \arrow[ru, "*_W"] \arrow[lu, above, "i_{WX}", hook]	&\\
+			A \arrow[rr, "\chi_{X}"] 				&						& \Omega =\{y,n\}
+		\end{tikzcd}\\\\
+		commutes. This still preserves a bijective correspondence between subsets and morphisms from $A$ to $\Omega$, as $\chi_W = \chi_X \circ i_{W}$. \textcolor{red}{So $X$ is \textbf{final} with respect to making this diagram commute}.
+	\end{proof}
+	\item\textit{(b)} Determine if the category $\mathfrak{Grp}$ contains a subobject classifier.\\
+	\textbf{Claim:} $\mathfrak{Grp}$ does not have a subobject classifier.
+	\begin{proof}
+		Firstly, the obvious notion of a subobject in $\mathfrak{Grp}$ is that of a subgroup, $X\leq A$. In $\mathfrak{Set}$ the final object is distinct from the initial object. Note this is not so in $\mathfrak{Grp}$, as the trivial group is both final and initial- it is a zero object. Now, any sub-group classification must also classify subsets. So, the previous construction must continue to hold. What we need is for the morphisms in the above construction to be group homomorphisms.\\
+		\begin{tikzcd}
+			X \arrow[r, "*_X"] \arrow[d, "i_X",hook]& 1 = \{*\}\arrow[d, "Y"]\\
+			A \arrow[r, "\chi_{X}"] & \Omega =\{y,n\}
+		\end{tikzcd}\\\\
+	However, now that $\{*\}$ is a zero object, the map from it to $\Omega$ must be unique, and it must take the identity (which must be $*$) to the identity. So, we have\\
+	\begin{tikzcd}
+			X \arrow[r, "*_X"] \arrow[d, "i_X",hook]& 1 = \{* = e\}\arrow[d, "Y"]\\
+			A \arrow[r, "\chi_{X}"] & \Omega =\{e_\Omega,a\}
+		\end{tikzcd}\\\\
+		with $Y(*) = e_\Omega$ a group? homomorphism into the two element group with $a^2 = e_\Omega$. $*_X$ is likewise a group homomorphism, as is $i_X$. So, we need the morphism $\chi_X$ to be a group homomorphism. Well, we also need the diagram to commute so for all $x$ in $X$, $\chi_X(i_X(x)) = Y(*_X(X)) = e_\Omega$
+		\textbf{This is not done!}
+	\end{proof}
+\end{itemize}
+
+
+\pagebreak
+\paragraph{Exercise I.5.8 (\#2)} In every category with products, $A\invamalg B$ is isomorphic to $B\invamalg A$. Similarly, in every category with coproducts, $A\amalg B$ is isomorphic to $B \amalg A$.
+\begin{proof}
+	Firstly, for products, note that each product "comes with" natural projection maps which we will denote by the following $\pi_{A1} : A\invamalg B \rightarrow A$, $\pi_{B1} : A\invamalg B \rightarrow B$, $\pi_{A2} : B\invamalg A \rightarrow A$, and $\pi_{B2} : B\invamalg A \rightarrow B$ (note that until we have proven $A\invamalg B$, $B\invamalg A$ isomorphic, these maps are technically distinct due to having different sources and targets). We thereby have the following diagram:\\\\
+	\begin{tikzcd}
+					&	&	&	&	A\\
+		A\invamalg B \arrow[urrrr, "\pi_{A1}", bend left = 20] \arrow[drrrr, "\pi_{B1}", bend right = 20]	&	B\invamalg A \arrow[urrr, "\pi_{A2}", bend left = 20] \arrow[drrr, "\pi_{B2}", bend right = 20]	&	A\invamalg B \arrow[urr, "\pi_{A1}", bend left = 20] \arrow[drr, "\pi_{B1}", bend right = 20]	&	B\invamalg A \arrow[ur, "\pi_{A2}"] \arrow[dr, "\pi_{B2}"]	&	\\
+					&	&	&	&	B
+	\end{tikzcd}\\\\
+	Now, as $B\invamalg A$ with its projection maps is a final object in $\mathscr{C}_{B,A}$, we have that for any other object in $\mathscr{C}$ with morphisms to $B$ and $A$, there must be a unique morphism from this object to $B\invamalg A$ such that the resulting diagram commutes. In particular, for $A\invamalg B \in\mathrm{Ob }\mathscr{C}$ with its projection maps $\pi_{B1}$ and $\pi_{A1}$, there is a unique morphism $\alpha : A\invamalg B \rightarrow B\invamalg A$ such that $\pi_{A1} = \pi_{A2}\circ\alpha$ and $\pi_{B1} = \pi_{B2}\circ\alpha$. By the same reasoning, there is also a unique morphism $\beta : B\invamalg A \rightarrow A\invamalg B$ such that $\pi_{A2} = \pi_{A1}\circ\beta$ and $\pi_{B2} = \pi_{B1}\circ\beta$.\\\\
+	Putting these into the previous diagram, we have that the following commutes:\\
+	\begin{tikzcd}
+					&	&	&	&	A\\
+		A\invamalg B \arrow[urrrr, "\pi_{A1}", bend left = 20] \arrow[drrrr, "\pi_{B1}", bend right = 20] \arrow[r, "\alpha"]	&	B\invamalg A \arrow[urrr, "\pi_{A2}", bend left = 20] \arrow[drrr, "\pi_{B2}", bend right = 20] \arrow[r, "\beta"]	&	A\invamalg B \arrow[urr, "\pi_{A1}", bend left = 20] \arrow[drr, "\pi_{B1}", bend right = 20] \arrow[r, "\alpha"]	&	B\invamalg A \arrow[ur, "\pi_{A2}"] \arrow[dr, "\pi_{B2}"]	&	\\
+					&	&	&	&	B
+	\end{tikzcd}\\\\
+	Through composition, we have morphisms $\alpha\beta : B\invamalg A \rightarrow B\invamalg A$, and $\beta\alpha : A\invamalg B \rightarrow A\invamalg B$. However, by finality of $B\invamalg A$ and $A\invamalg B$ the only maps from these objects to themselves which commute under the projection maps are the identities. Thus, $\alpha\beta = \mathrm{id}_{B\invamalg A}$ and  $\beta\alpha = \mathrm{id}_{A\invamalg B}$. Hence, $\alpha$ and $\beta$ are isomorphisms between these objects, so $B\invamalg A$ is isomorphic to $A\invamalg B$.\\\\\\
+	
+	\pagebreak
+	Secondly, for coproducts the argument is the same. Let us "jump the gun" and observe the following diagram:\\
+	\begin{tikzcd}
+					&	&	&	&	A\\
+		A\amalg B \arrow[urrrr, "i_{A1}", bend left = 20, leftarrow] \arrow[drrrr, "i_{B1}", bend right = 20, leftarrow] \arrow[r, "\alpha", leftarrow]	&	B\amalg A \arrow[urrr, "i_{A2}", bend left = 20, leftarrow] \arrow[drrr, "i_{B2}", bend right = 20, leftarrow] \arrow[r, "\beta", leftarrow]	&	A\amalg B \arrow[urr, "i_{A1}", bend left = 20, leftarrow] \arrow[drr, "i_{B1}", bend right = 20, leftarrow] \arrow[r, "\alpha", leftarrow]	&	B\amalg A \arrow[ur, "i_{A2}", leftarrow] \arrow[dr, "i_{B2}", leftarrow]	&	\\
+					&	&	&	&	B
+	\end{tikzcd}\\\\
+	
+	The morphisms $\alpha$ and $\beta$ exist uniquely as $A\amalg B$ and $B\amalg A$ are initial objects with respect to any other object in the category which is a target of one morphism with source $A$ and another morphism with source $B$. By this very initialness, there is only one morphism from $A\amalg B$ to itself, and only one morphism from $B \amalg A$ to itself- the identity morphisms. Since $\alpha\beta : A\amalg B \rightarrow A\amalg B$ and $\beta\alpha : B\amalg A \rightarrow B\amalg A$, these compositions are equal to these very identity morphisms, so $\alpha$ and $\beta$ are isomorphisms, so $A\amalg B$ is isomorphic to $B\amalg A$, as was desired to be shown.
+	
+\end{proof}
+
+
+
+
+\pagebreak
+\paragraph{Exercise II.3.1 (Lemma to \#4):} Let  $\mathscr{C}$ be a category with products of pairs. Suppose $\varphi \in \Hom_{\mathscr{C}}(G,H)$. Then there must exist a unique map $(\varphi \invamalg \varphi):G\invamalg G \rightarrow H\invamalg H$ which is compatible with the natural projections.
+\begin{proof}
+As we have products and we have the map $\varphi: G \rightarrow H$, we have the following diagram:\\
+	\begin{tikzcd}
+												&G \arrow[r, "\varphi"]		&H\\
+	G\invamalg G \arrow[ur,"\pi_{G1}"] \arrow[dr, "\pi_{G2}"]  & H\invamalg H \arrow[ur,"\pi_{H1}"] \arrow[dr, "\pi_{H2}"]\\
+												&G \arrow[r, "\varphi"]		&H
+	\end{tikzcd}\\\\
+	
+	Now, by composing $\varphi \circ \pi_{G_1}$ and $\varphi \circ \pi_{G_2}$ we have maps from $G\invamalg G$ to each of the $H$'s, i.e. we have:\\\\
+	\begin{tikzcd}
+												&		&H\\
+	G\invamalg G \arrow[urr,"\varphi\circ\pi_{G1}", bend left=20] \arrow[drr, "\varphi\circ\pi_{G2}", bend right = 20]  & H\invamalg H \arrow[ur,"\pi_{H1}"] \arrow[dr, "\pi_{H2}"]\\
+												&		&H
+	\end{tikzcd}\\\\
+	
+	
+	Now, as $H\invamalg H$ with the projections to each component is a final object in $\mathscr{C}_{H,H}$ (by definition of product), and we have exhibited another object in this category, there must exist a unique map\\ 
+	$\sigma: G\invamalg G \rightarrow H\invamalg H$ such that the following diagram commutes\\\\
+	\begin{tikzcd}
+												&		&H\\
+	G\invamalg G \arrow[urr,"\varphi\circ\pi_{G1}", bend left=20] \arrow[drr, "\varphi\circ\pi_{G2}", bend right = 20]  \arrow[r, "\exists ! \sigma", dashed] & H\invamalg H \arrow[ur,"\pi_{H1}"] \arrow[dr, "\pi_{H2}"]\\
+												&		&H
+	\end{tikzcd}\\\\
+	
+	That is to say, such that $\pi_{H_1} \circ \sigma = \varphi\circ\pi_{G_1}$ and $\pi_{H_2} \circ \sigma = \varphi\circ\pi_{G_2}$. As this map is uniquely determined by $\varphi$ (and $\varphi$'s source and target), we can unambiguously denote it by $\varphi\invamalg \varphi$. 
+\end{proof}
+
+
+
+\pagebreak
+\paragraph{Exercise 3.2 (\#4):} Let  $\mathscr{C}$ be a category with products of pairs.\\
+Suppose $\varphi \in \Hom_{\mathscr{C}}(G,H)$ and $\psi \in \Hom_{\mathscr{C}}(H,K)$.\\
+Then $(\psi\varphi)\invamalg(\psi\varphi) = (\psi\invamalg\psi)\circ(\varphi\invamalg\varphi)$.
+
+\begin{proof} 
+From Exercise II.3.1, the existence of $\varphi: G\rightarrow H$ and $\psi:H \rightarrow K$ immediately gives us the existence of the \textit{unique} "product morphisms" $\varphi\invamalg\varphi: G\invamalg G\rightarrow H\invamalg H$ and $\psi\invamalg\psi:H\invamalg H \rightarrow K\invamalg  K$ compatible with the natural projections. In other words, the following diagram commutes:\\
+
+\begin{tikzcd}
+												&G \arrow[r, "\varphi"]		&H \arrow[r, "\psi"] 		&K\\
+	G\invamalg G \arrow[ur,"\pi_{G1}"] \arrow[dr, "\pi_{G2}"] \arrow[r, "\varphi\invamalg\varphi"] & H\invamalg H \arrow[ur,"\pi_{H1}"] \arrow[dr, "\pi_{H2}"] \arrow[r, "\psi\invamalg\psi"]	& K\invamalg K \arrow[ur,"\pi_{K1}"] \arrow[dr, "\pi_{K2}"]\\
+												&G \arrow[r, "\varphi"]		&H \arrow[r, "\psi"] 		&K
+\end{tikzcd}\\\\
+
+	Now, composing morphisms yields:\\
+	\begin{tikzcd}
+												&	&	&K\\
+	G\invamalg G \arrow[urrr,"(\psi\varphi)\circ\pi_{G1}", bend left =20] \arrow[drrr, "(\psi\varphi)\circ\pi_{G2}", bend right = 20] \arrow[rr, "(\psi\invamalg\psi)\circ(\varphi\invamalg\varphi)"] & & K\invamalg K \arrow[ur,"\pi_{K1}"] \arrow[dr, "\pi_{K2}"]\\
+												&	&	&K
+\end{tikzcd}\\\\
+and this diagram still commutes, as it is merely the same diagram as before but with compositions of morphisms "pinching away the $H$'s". However, $K\invamalg K$ with the projection maps is final in $\mathscr{C}_{K,K}$, so there is a unique map from $G\invamalg G$ to $K\invamalg K$ which is entirely determined by $\psi\varphi$ as in Exercise 3.1. So, denote this unique map by $(\psi\varphi)\invamalg(\psi\varphi)$ as in Exercise 3.1. This map is \textbf{unique!} But we also have the map $(\psi\invamalg\psi)\circ(\varphi\invamalg\varphi) : G\invamalg G \rightarrow K\invamalg K$, which \textbf{also} makes the diagram commute. So, these maps are actually the same, so we have that $(\psi\invamalg\psi)\circ(\varphi\invamalg\varphi) = (\psi\varphi)\invamalg(\psi\varphi)$ as we desired to show.
+\end{proof}
+
+
+
+
+
+\pagebreak
+\paragraph{Exercise II.7.12 (\#3)} (Written using notation given by Dr. Brennan)\\ 
+Let $X \in \mathrm{Ob }\mathfrak{Set}$, $A \in \mathrm{Ob }\mathfrak{Ab}$ (an object in the category of Abelian groups- an abelian group), and $\varphi \in \mathrm{Hom}_{\mathfrak{Set}}(X,A)$. Then, there is a unique $\tilde\varphi \in \mathrm{Hom}_{\mathfrak{Ab}}(F(X)/[F(X),F(X)], A)$ such that\\\\
+		\begin{tikzcd}
+			X \arrow[rd, "\varphi"] \arrow[r] & F(X)/[F(X),F(X)] \arrow[d, "\tilde\varphi"]\\
+			 & A
+		\end{tikzcd}\\\\
+	Commutes. Furthermore, $F(X)/[F(X),F(X)]$ is isomorphic to $F^\text{ab}(X) \cong \mathrm{Hom}_{\mathfrak{Set}}(X,\mathbb{Z})$, the free abelian group on $X$.
+\begin{proof}
+	Firstly, let us think of $\varphi$ as a set function to $A$ with $A$ considered as an object of $\mathfrak{Grp}$. There exists a map $j:X\rightarrow F(X)$, which is initial with respect to mapping $X$ to a \textit{group}. In other words, there exists a \textbf{unique} \textit{group homomorphism} $\hat\varphi\in\mathrm{Hom}_{\mathfrak{Grp}}(F(X),A)$ such that the following diagram commutes:\\
+		\begin{tikzcd}
+			X \arrow[rd, "\varphi"] \arrow[d, "j"] &\\
+			F(X) \arrow[r, "\hat\varphi"] & A
+		\end{tikzcd}\\\\
+		
+	Now, the commutator subgroup of any group is normal in that group, and the quotient group formed by it is abelian.\\ 
+	In particular, $[F(X), F(X)] \trianglelefteq F(X)$ and $F(X)/[F(X),F(X)] \in \mathrm{Ob }\mathfrak{Ab}$.\\
+	We then have the surjective projection homomorphism $\pi : F(X) \rightarrow F(X)/[F(X),F(X)]$, shown in the following diagram:\\\\
+		\begin{tikzcd}
+			X \arrow[rd, "\varphi"] \arrow[d, "j"] &\\
+			F(X) \arrow[d, "\pi"] \arrow[r, "\hat\varphi"] & A\\
+			F(X)/[F(X),F(X)]
+		\end{tikzcd}\\\\
+		
+	Now, $[F(X),F(X)] \subset \mathrm{ker}\hat\varphi$, as all elements of $[F(X), F(X)]$ are of the form $fgf^{-1}g^{-1}$ for $f,g\in F(X)$ so $\hat\varphi(fgf^{-1}g^{-1}) = \hat\varphi(f)\hat\varphi(g)\hat\varphi(f)^{-1}\hat\varphi(g)^{-1}$ and as these are all in $A$, an abelian group, this gives $\hat\varphi(f)\hat\varphi(g)\hat\varphi(g)^{-1}\hat\varphi(f)^{-1} = \hat\varphi(f)e_A\hat\varphi(g)^{-1} = e_A$.\\\\
+	Thus, by Theorem 7.12 in Aluffi, there exists a \textbf{unique} homomorphism\\ 
+	$\tilde\varphi : F(X)/[F(X),F(X)] \rightarrow A$ such that\\\\
+		\begin{tikzcd}
+			X \arrow[rd, "\varphi"] \arrow[d, "j"] &\\
+			F(X) \arrow[d, "\pi"] \arrow[r, "\hat\varphi"] & A\\
+			F(X)/[F(X),F(X)] \arrow[ru, "\tilde\varphi"]
+		\end{tikzcd}\\\\ 
+	Commutes. Note that $\tilde\varphi$ is actually an abelian group homomorphism.\\
+	Now, compose morphisms $\pi$ and $j$ to obtain\\\\
+		\begin{tikzcd}
+			X \arrow[r, "\varphi"] \arrow[d, "\pi j"] & A\\
+			F(X)/[F(X),F(X)] \arrow[ru, "\tilde\varphi"]
+		\end{tikzcd}\\\\ 
+		
+	So, we have shown the existence of such a unique $\tilde\varphi \in \mathrm{Hom}_{\mathfrak{Ab}}(F(X)/[F(X),F(X)], A)$ as desired. All that remains is to show that $F(X)/[F(X),F(X)] \cong F^\text{ab}(X)$.\\\\
+	Well, $J:X \rightarrow F^\text{ab}(X)$ is in intial object in $\mathfrak{Set}^X_{\mathfrak{Ab}}$.\\ 
+	However, we have shown that $\pi j:X \rightarrow F(X)/[F(X),F(X)]$ is initial in this category also! As initial objects in a category are isomorphic,	it follows that
+	\[
+	F(X)/[F(X),F(X)] \cong F^\text{ab}(X) = \mathrm{Hom}_{\mathfrak{Set}}(X,\mathbb{Z})
+	\] 
+	as claimed.
+	
+\end{proof}
+
+
+
+
+
+
+
+\pagebreak
+\paragraph{A combo of II.8.7 and II.9.14 (\#6)} Suppose $G_1, G_2$ are groups, and that $\varphi_1 : F(G_1) \rightarrow G_1$ and $\varphi_2 : F(G_2) \rightarrow G_2$ are the natural epimorphisms sending letters to their corresponding group elements.
+\begin{itemize}
+	\item\textit{(a)} $F(G_1 \dot{\cup} G_2) / <\mathrm{ker }\varphi_1, \mathrm{ker }\varphi_2>$ is the coproduct of $G_1$ and $G_2$ in $\mathfrak{Grp}$.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+\pagebreak
+\paragraph{Exercise II.8.22 + A second part (\#7)} 
+\begin{itemize}
+	\item\textit{(a)} Show that $\mathfrak{Grp}$ has cokernels.
+	\item\textit{(b)} Determine if $\mathfrak{Grp}$ has coequalizers.
+\end{itemize}
+\begin{proof}
+	\item\textit{(a)} $\mathfrak{Grp}$ does have cokernels. Given $\varphi \in \mathrm{Hom}_{\mathfrak{Grp}}(G,G')$,define $N := \bigcap_{H \trianglelefteq G' \text{ and } \text{im }\varphi \subset H} H$. Then, we will show that $\text{coker }\varphi = G'/N$. Now, for any $\alpha : G' \rightarrow L$ such that $\alpha\varphi$ is the trivial map, we must show that there exists a unique $\tilde\alpha : G'/N = \text{coker }\varphi \rightarrow L$. I.e. that such a unique morphism exists so that the diagram:\\\\
+	\begin{tikzcd}
+		G \arrow[r, "\varphi", shift left = 1.7] \arrow[r, "0", shift right = 1.7] 	& G' \arrow[r, "\alpha"] \arrow[d, "\pi", twoheadrightarrow] & L\\
+									& \text{coker }\varphi = G'/N \arrow[ur, "\tilde\alpha"]
+	\end{tikzcd}\\\\
+	Commutes. Well the only reasonable definition of $\tilde\alpha$ is given by $\tilde\alpha(gN) = \alpha(g)$. We must check that this is well defined. Well, if $\tilde\alpha(gN) = \tilde\alpha(hN)$ then we want $\alpha(g) = \alpha(h)$. If $\alpha(g) \not = \alpha(h)$, then $\alpha(g^{-1}h) \not= e_L$ so $g^{-1}h\not\in \text{ker }\alpha$. Note that as $N$ is the smallest normal subgroup containing the image of $\varphi$, it must be that $N \subset \text{ker }\alpha$ since $\alpha\varphi = \alpha0 = 0$ and $\text{im }\varphi \subset \text{ker }\alpha$. However, then as $gN = hN \implies N = g^{-1}hN \implies g^{-1}h\in N \subset \text{ker }\alpha$, it must be that $\alpha(g^{-1}h) = e_L \implies \alpha(g) = \alpha(h)$ after all. So $\tilde\alpha$ is well defined.\\
+	Then, $\tilde\alpha\pi\varphi(a) = \tilde\alpha\pi(\varphi(a)) = \tilde\alpha(\varphi(a)N) = \tilde\alpha(N) = e_L$, so $\tilde\alpha\pi\varphi = 0$, and the given defintion of the cokernel satisfies the needed universal property.
+	
+	\item\textit{(b)} $\mathfrak{Grp}$ does have coequalizers. Given $\varphi, \psi \in \mathrm{Hom}_{\mathfrak{Grp}}(G,G')$, define $S = \{\varphi(a)\psi(a)^{-1} | a\in G\}$ and $N := \bigcap_{H \trianglelefteq G' \text{ and } S \subset H} H$. Then, we will show that a coequalizer $C$ is given by $C = G'/N$. Now, for any $\alpha : G' \rightarrow L$ such that $\alpha\varphi = \alpha\psi$, we must show that there exists a unique $\tilde\alpha : G'/N = C \rightarrow L$. I.e. that such a unique morphism exists so that the diagram:\\\\
+	\begin{tikzcd}
+		G \arrow[r, "\varphi", shift left = 1.7] \arrow[r, "\psi", shift right = 1.7] 	& G' \arrow[r, "\alpha"] \arrow[d, "\pi", twoheadrightarrow] & L\\
+									& G'/N = C \arrow[ur, "\tilde\alpha"]
+	\end{tikzcd}\\\\
+	Commutes.\\
+	Firstly, if $s\in S$ then $\exists a\in G$ such that $s = \varphi(a)\psi(a)^{-1}$ and then $\alpha(s) = \alpha(\varphi(a)\psi(a)^{-1}) = \alpha(\varphi(a))\alpha(\psi(a)^{-1})) = \alpha\varphi(a)\alpha\psi(a)^{-1} = \alpha\psi(a)\alpha\psi(a)^{-1} = e_L$.\\
+	Now, note that  as $S \subset \text{ker }\alpha$ and $N$ is the smallest normal subgroup containing $S$, we must have that $S\subset N \subset \text{ker }\alpha$. Thus, we have that there must indeed exist a \textbf{unique} group homomorphism $\tilde\alpha$ from $C$ to $L$ such that the diagram commutes. I.e. $\tilde\alpha\pi = \alpha$ so $\alpha\varphi = \alpha\psi \implies \tilde\alpha\pi\varphi = \tilde\alpha\pi\psi$
+\end{proof}
+
+
+
+
+
+\pagebreak
+\paragraph{(\#8)} Show that if a category has (co)products of pairs of objects then it has (co)products of finitely indexed families of objects.
+\begin{proof}
+	First, we will show that this holds in the case of triples. So, let $A,B,C \in \mathrm{Ob }\mathscr{C}$. Then, what we want is an object $A\invamalg B\invamalg C$ with projection epimorphisms $\pi_A : A\invamalg B\invamalg C \rightarrow A$, $\pi_B : A\invamalg B\invamalg C \rightarrow B$, and $\pi_C : A\invamalg B\invamalg C \rightarrow C$ such that for any other object $W \in \mathrm{Ob }\mathscr{C}$ with maps $h_A : W \rightarrow A$, $h_AB : W \rightarrow B$, and $h_C : W \rightarrow C$, there will exist a \textbf{unique} morphism $\sigma : W \rightarrow A\invamalg B\invamalg C$ such that $\pi_A\sigma = h_A$, $\pi_B\sigma = h_B$, and $\pi_C\sigma = h_C$. Our strategy will be to show that $(A\invamalg B)\invamalg C$ (with the projections $\pi_{A\invamalg B}:(A\invamalg B)\invamalg C \rightarrow A\invamalg B$, and $\pi_{C}:(A\invamalg B)\invamalg C \rightarrow C$) satisfies this property, and so is a final object in $\mathscr{C}_{A,B,C}$. Then, we will show that $A\invamalg (B\invamalg C)$ (with its projections) \textit{also} satisfies this property, and is thereby isomorphic to $(A\invamalg B)\invamalg C$, and so we can denote "both" unambiguously by $A\invamalg B\invamalg C$.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+\pagebreak
+\paragraph{Exercise II.9.13 (\#5)} Show that for all subgroups $H$ of a group $G$ and $\forall g\in G$, $G/H$ and $G/(gHg^{-1})$ are isomorphic in $\mathfrak{G-Set}$ (each being acted upon by $G$ via left-multiplication).
+
+\begin{proof}
+	First of all, fix any $g \in G$.
+	We want to show that there exists a $G$-equivariant (set) bijection $\varphi: \frac{G}{H} \rightarrow \frac{G}{gHg^{-1}}$ such that the following diagram commutes:\\\\
+	\begin{tikzcd}
+			G \invamalg \frac{G}{H} \arrow[r, "id_G \invamalg \varphi"] \arrow[d, "\rho"]& G \invamalg \frac{G}{gHg^{-1}} \arrow[d, "\rho'"]\\
+			\frac{G}{H} \arrow[r, "\varphi"] & \frac{G}{gHg^{-1}}
+		\end{tikzcd}\\\\
+		Where $\rho$ and $\rho'$ denote the left-multiplicative actions of $G$ on the respective sets of left cosets.\\
+		We will take the easy way out, and explicitly define such a $\varphi$ on the elements of these sets.\\\\ 
+		Let $\varphi$ be defined by $aH \mapsto (ag^{-1})(gHg^{-1})$, for any $a\in G$.\\
+		We need to show, firstly, that this is well defined. well, if $aH = bH$ for $a,b\in G$, then
+		\[
+			(aH)g^{-1} = (bH)g^{-1} \implies ag^{-1}(gHg^{-1}) = bg^{-1}(gHg^{-1}) \implies \varphi(aH) = \varphi(bH),
+		\]
+		so $\varphi$ is well defined. Next, we shall show injectivity, surjectivity, and $G$-equivariance.
+		\begin{itemize}
+			\item\textbf{Injective:}\\ 
+				$\varphi(aH) = \varphi(bH) \implies ag^{-1}(gHg^{-1}) = bg^{-1}(gHg^{-1})\\ 
+				\implies aHg^{-1} = bHg^{-1} \implies aH = bH$.
+			\item\textbf{Surjective:} Given any $a(gHg^{-1}) \in G / (gHg^{-1})$, pick the element $(ag)H \in G/H$. Then we have that
+			\[
+				\varphi((ag)H) = (ag)g^{-1}(gHg^{-1}) = a(gHg^{-1}),
+			\]
+			so that $\varphi$ is thereby surjective.
+			\item\textbf{$G$-Equivariance:} For any $a,b \in G$, consider:\\ 
+			$\varphi((ab)H) = (ab)g^{-1}(gHg^{-1}) = a(bg^{-1})(gHg^{-1}) = a\varphi(bH)$\\
+			So $\varphi$ is $G$-Equivariant.
+		\end{itemize}
+		Thus, $\varphi$ is an isomorphism in $\mathfrak{G-Set}$ (based on any fixed $g\in G$), so $G/H$ and $G/(gHg^{-1})$ are isomorphic for any $g \in G$ as claimed.
+\end{proof}
+
+
+\end{document}
