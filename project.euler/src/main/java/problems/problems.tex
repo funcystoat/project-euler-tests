@@ -12,40 +12,37 @@
 \usepackage{eufrak}
 \usepackage{tikz-cd}
 \usepackage{mathrsfs}
-\newcommand{\invamalg}{\mathbin{\text{\rotatebox[origin=c]{180}{$\amalg$}}}}
-
 \usepackage{natbib}
-\expandafter\def\expandafter\quote\expandafter{\quote\small}
 
 
 \newcommand{\tss}{\textsuperscript}
-\newcommand{\GLC}{\textbf{GL}(n;\mathbb{C})}
-\newcommand{\GLR}{\textbf{GL}(n;\mathbb{R})}
-\newcommand{\SLC}{\textbf{SL}(n;\mathbb{C})}
-\newcommand{\SLR}{\textbf{SL}(n;\mathbb{R})}
-\newcommand{\MC}{M_n(\mathbb{C})}
-\newcommand{\MR}{M_n(\mathbb{R})}
-\newcommand{\ex}{e^X}
-\newcommand{\norm}{||}
-\newcommand{\peps}{P_{\epsilon_k}}
-\newcommand{\lieg}{\mathfrak{g}}
-\newcommand{\lieh}{\mathfrak{h}}
-
-\newcommand{\glC}{\textbf{gl}(n;\mathbb{C})}
-\newcommand{\glR}{\textbf{gl}(n;\mathbb{R})}
-\newcommand{\slC}{\textbf{sl}(n;\mathbb{C})}
-\newcommand{\slR}{\textbf{sl}(n;\mathbb{R})}
-
-\newcommand{\Hom}{\mathrm{Hom}}
-
 
 \pgfplotsset{compat=1.16}
 
 \author{Alexander Leigh Eubanks \\ aka \\ funcystoat}
-\title{Project Euler}
+\title{Solutions to Problems from Project Euler}
 
 \begin{document}
 \maketitle
 \paragraph{Problem \#1:}  
-Hewwo
+This problem can be solved by hand. 
+To sum up all of the multiples of $3$ or $5$ which are less than $1000$ (less than or equal to $999$), we note that $\lfloor \frac{999}{3} \rfloor = 333$ and $\lfloor \frac{999}{5} \rfloor = 199$,
+so we wish to consider the sums
+\[
+	\sum_{i=1}^{333} 3i
+\]
+and
+\[
+	\phantom{.}\sum_{j=1}^{199} 5j.
+\]
+\paragraph{} Note that each of these sums count all of the multiples of $15$ (i.e., those numbers which are multiples of $3$ \textit{and} $5$), and so these are double-counted. As such, to find the desired sum we must subtract the sum of all multiples of $15$. As, $\lfloor \frac{999}{15} \rfloor = 66$, this gives us the sum
+\begin{align*}
+	S 	&= \sum_{i=1}^{333} 3i + \sum_{j=1}^{199} 5j - \sum_{k=1}^{66} 15k
+\end{align*}
+which, by using $\sum_{i=1}^N i = \frac{N(N+1)}{2}$, gives us
+\begin{align*}
+	S	&= 3\frac{333(333+1)}{2} + 5\frac{199(199+1)}{2} - 15\frac{66(66+1)}{2}\\
+		&= 3*333*167 + 5*199*100 - 15*33*67\\
+		&= 233,168.
+\end{align*}
 \end{document}
