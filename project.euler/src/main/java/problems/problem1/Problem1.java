@@ -61,11 +61,13 @@ public class Problem1 {
 		int N1 = upperBound / 3;
 		int N2 = upperBound / 5;
 		int N3 = upperBound / 15;
+		
+		int firstSum = 3 * (N1 * (N1 + 1)) / 2;
+		int secondSum = 5 * (N2 * (N2 + 1)) / 2 ;
+		int thirdSum = 15 * (N3 * (N3 + 1)) / 2;
+		
+		int totalSum = firstSum + secondSum - thirdSum;
 
-		System.out.println(
-				3 * (N1 * (N1 + 1)) / 2 
-				+ 5 * (N2 * (N2 + 1)) / 2 
-				- 15 * (N3 * (N3 + 1)) / 2
-				);
+		System.out.println(totalSum);
 	}
 }
